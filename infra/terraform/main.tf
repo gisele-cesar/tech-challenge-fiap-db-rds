@@ -31,7 +31,7 @@ resource "aws_db_subnet_group" "subnet_rds_fiap_3" {
 }
 
 resource "aws_security_group" "rds" {
-  name   = "sg-rds-fiap-3"
+  name   = "rds-fiap-3"
   vpc_id = module.vpc.vpc_id
 
   ingress {
