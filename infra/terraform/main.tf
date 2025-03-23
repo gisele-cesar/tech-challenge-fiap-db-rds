@@ -53,15 +53,15 @@ resource "aws_security_group" "rds" {
   }
 }
 
-resource "aws_db_parameter_group" "parameter_rds" {
-  name   = "parameterrdsfiap3"
-  family = "sqlserver-ex-15.0"
+# resource "aws_db_parameter_group" "parameter_rds" {
+#   name   = "parameterrdsfiap3"
+#   family = "sqlserver-ex-15.0"
 
-  parameter {
-    name  = "log_connections"
-    value = "1"
-  }
-}
+#   parameter {
+#     name  = "log_connections"
+#     value = "1"
+#   }
+# }
 
 resource "aws_db_instance" "db-rds-fiap-3" {
   identifier             = "db-rds-fiap3"
@@ -73,7 +73,7 @@ resource "aws_db_instance" "db-rds-fiap-3" {
   password               = var.db_password
   db_subnet_group_name   = aws_db_subnet_group.subnet_rds_fiap_3.name
   vpc_security_group_ids = [aws_security_group.rds.id]
-  parameter_group_name   = aws_db_parameter_group.parameter_rds.name
+  parameter_group_name   = "default.sqlserver-ex-15.0"
   publicly_accessible    = true
   skip_final_snapshot    = true
 }
