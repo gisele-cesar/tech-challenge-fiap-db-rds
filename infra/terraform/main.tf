@@ -67,7 +67,7 @@ resource "aws_db_instance" "db-rds-fiap-3" {
   identifier             = "db-rds-fiap3"
   instance_class         = "db.t3.micro"
   allocated_storage      = 10
-  engine                 = "sqlserver"
+  engine                 = "sqlserver-ex"
   engine_version         = "15.00.4415.2.v1"
   username               = "postech"
   password               = var.db_password
