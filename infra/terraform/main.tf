@@ -64,7 +64,7 @@ resource "aws_db_parameter_group" "parameter_rds" {
 }
 
 resource "aws_db_instance" "db-rds-fiap-3" {
-  identifier             = "PosTechFiap"
+  identifier             = "db-rds-fiap3"
   instance_class         = "db.t3.micro"
   allocated_storage      = 10
   engine                 = "sqlserver"
