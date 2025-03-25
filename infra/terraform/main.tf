@@ -77,16 +77,3 @@ resource "aws_db_instance" "db-rds-fiap-3" {
   publicly_accessible    = true
   skip_final_snapshot    = true
 }
-
-resource "null_resource" "run_sql_script" {
-  provisioner "local-exec" {
-    command = <<EOT
-      sqlcmd -S ${aws_db_instance.db-rds-fiap-3.identifier} -U postech -P ${var.db_password} -d master -i ./scripts/ScriptCriacaoTabelas.sql
-    EOT
-    environment = {
-      PATH = "/usr/local/bin:${PATH}"
-    }
-  }
-
-  depends_on = [aws_db_instance.db-rds-fiap-3]
-}
