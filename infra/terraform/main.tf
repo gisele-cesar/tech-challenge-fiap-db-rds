@@ -35,21 +35,21 @@ resource "aws_security_group" "rds" {
   vpc_id = module.vpc.vpc_id
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
+    from_port   = 1433
+    to_port     = 1433
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port   = 5432
-    to_port     = 5432
+    from_port   = 1433
+    to_port     = 1433
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Name = "sg-rds-fiap-3"
+    name = "sg-rds-fiap-3"
   }
 }
 
@@ -76,4 +76,17 @@ resource "aws_db_instance" "db-rds-fiap-3" {
   parameter_group_name   = "default.sqlserver-ex-15.0"
   publicly_accessible    = true
   skip_final_snapshot    = true
+}
+
+resource "null_resource" "run_sql_script" {
+  provisioner "local-exec" {
+    command = <<EOT
+      sqlcmd -S ${aws_db_instance.db-rds-fiap-3.endpoint} -U postech -P ${var.db_password} -d master -i ./scripts/ScriptCriacaoTabelas.sql
+    EOT
+    environment = {
+      PATH = "/usr/local/bin:${PATH}"
+    }
+  }
+
+  depends_on = [aws_db_instance.db-rds-fiap-3]
 }
